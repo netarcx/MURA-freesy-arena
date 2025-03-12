@@ -14,12 +14,13 @@ func _() {
 	_ = x[redAmp-3]
 	_ = x[blueAmp-4]
 	_ = x[miscounts-5]
-	_ = x[registerCount-6]
+	_ = x[matchState-6]
+	_ = x[registerCount-7]
 }
 
-const _register_name = "fieldIoConnectionredSpeakerblueSpeakerredAmpblueAmpmiscountsregisterCount"
+const _register_name = "fieldIoConnectionredSpeakerblueSpeakerredAmpblueAmpmiscountsmatchStateregisterCount"
 
-var _register_index = [...]uint8{0, 17, 27, 38, 44, 51, 60, 73}
+var _register_index = [...]uint8{0, 17, 27, 38, 44, 51, 60, 70, 83}
 
 func (i register) String() string {
 	if i < 0 || i >= register(len(_register_index)-1) {

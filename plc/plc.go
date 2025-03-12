@@ -45,7 +45,8 @@ type Plc interface {
 	SetAlternateIOStopState(input int, state bool)
 	ResetEstops()
 	GetFieldStackLight() (bool, bool, bool, bool)
-	GetBargeStackLight() (bool, bool, bool, bool,bool)
+	GetBargeStackLight() (bool, bool, bool, bool, bool, int)
+	SetMatchState(uint16)
 	
 }
 
@@ -116,6 +117,7 @@ const (
 	redAmp
 	blueAmp
 	miscounts
+	matchState
 	registerCount
 )
 
@@ -540,6 +542,11 @@ func (plc *ModbusPlc) SetAlternateIOStopState(input int, state bool){
 func (plc *ModbusPlc) GetFieldStackLight() (bool, bool, bool, bool) {
 	return plc.coils[stackLightRed], plc.coils[stackLightBlue], plc.coils[stackLightOrange], plc.coils[stackLightGreen]
 }
-func (plc *ModbusPlc) GetBargeStackLight() (bool, bool, bool, bool, bool) {
-	return plc.coils[redAmpLightLow], plc.coils[redAmpLightHigh], plc.coils[blueAmpLightLow], plc.coils[blueAmpLightHigh], plc.coils[isPlayoffs]
+func (plc *ModbusPlc) GetBargeStackLight() (bool, bool, bool, bool, bool, int) {
+	return plc.coils[redAmpLightLow], plc.coils[redAmpLightHigh], plc.coils[blueAmpLightLow], plc.coils[blueAmpLightHigh], plc.coils[isPlayoffs], int(plc.registers[matchState])
+}
+
+// Returns the red amp, red speaker, blue amp, and blue speaker note counts, respectively.
+func (plc *ModbusPlc) SetMatchState(state uint16) () {
+	plc.registers[matchState] = state
 }

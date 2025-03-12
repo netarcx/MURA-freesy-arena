@@ -59,6 +59,7 @@ type bargeStackLight struct {
 	Blue1 bool `json:"blue1StackLight"`
 	Blue2 bool `json:"blue2StackLight"`
 	IsPlayoffs bool `json:"isPlayoffsStackLight"`
+	MatchState int `json:"matchState"`
 }
 
 func (web *Web) bargeStackLightGetHandler(w http.ResponseWriter, r *http.Request) {
@@ -70,7 +71,7 @@ func (web *Web) bargeStackLightGetHandler(w http.ResponseWriter, r *http.Request
 
 	// Get the current state of the field stack light.
 	var bargeLight bargeStackLight
-	bargeLight.Red1, bargeLight.Red2, bargeLight.Blue1, bargeLight.Blue2, bargeLight.IsPlayoffs = web.arena.Plc.GetBargeStackLight()
+	bargeLight.Red1, bargeLight.Red2, bargeLight.Blue1, bargeLight.Blue2, bargeLight.IsPlayoffs, bargeLight.MatchState = web.arena.Plc.GetBargeStackLight()
 	
 	// Marshal the response payload.
 	response, err := json.Marshal(bargeLight)
