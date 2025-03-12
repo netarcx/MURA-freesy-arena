@@ -1035,8 +1035,8 @@ func (arena *Arena) handlePlcInputOutput() {
 		arena.BlueRealtimeScore.AmplifiedTimePostWindow = blueAmplifiedTimePostWindow
 		
 		if arena.MatchState == AutoPeriod || arena.MatchState == PausePeriod || arena.MatchState == TeleopPeriod {
-			redLowAmpLight := redAmpSpeaker.BankedAmpNotes >= 1
-			redHighAmpLight := redAmpSpeaker.BankedAmpNotes >= 2
+			redLowAmpLight := redAmpSpeaker.ProcessedAlgae >= 1
+			redHighAmpLight := redAmpSpeaker.ProcessedAlgae >= 2
 			redCoopAmpLight := redAmpSpeaker.CoopActivated
 			if redAmplifiedTimeRemaining > 0 {
 				redAmplifiedTimePostWindow_ons = false
@@ -1053,8 +1053,8 @@ func (arena *Arena) handlePlcInputOutput() {
 				redAmplifiedTimePostWindow_ons = true
 			}
 			
-			blueLowAmpLight := blueAmpSpeaker.BankedAmpNotes >= 1
-			blueHighAmpLight := blueAmpSpeaker.BankedAmpNotes >= 2
+			blueLowAmpLight := blueAmpSpeaker.ProcessedAlgae >= 1
+			blueHighAmpLight := blueAmpSpeaker.ProcessedAlgae >= 2
 			blueCoopAmpLight := blueAmpSpeaker.CoopActivated
 			if blueAmplifiedTimeRemaining > 0 {
 				blueAmplifiedTimePostWindow_ons = false
@@ -1194,16 +1194,16 @@ func (arena *Arena) handlePlcInputOutput() {
 		blueAmplifiedTimeRemaining := blueAmpSpeaker.AmplifiedTimeRemaining(currentTime)
 		arena.BlueRealtimeScore.AmplifiedTimeRemainingSec = int(math.Ceil(blueAmplifiedTimeRemaining))
 		if arena.MatchState == AutoPeriod || arena.MatchState == PausePeriod || arena.MatchState == TeleopPeriod {
-			redLowAmpLight := redAmpSpeaker.BankedAmpNotes >= 1
-			redHighAmpLight := redAmpSpeaker.BankedAmpNotes >= 2
+			redLowAmpLight := redAmpSpeaker.ProcessedAlgae >= 1
+			redHighAmpLight := redAmpSpeaker.ProcessedAlgae >= 2
 			redCoopAmpLight := redAmpSpeaker.CoopActivated
 			if redAmplifiedTimeRemaining > 0 {
 				redLowAmpLight = int(redAmplifiedTimeRemaining*2)%2 == 0
 				redHighAmpLight = !redLowAmpLight
 			}
 
-			blueLowAmpLight := blueAmpSpeaker.BankedAmpNotes >= 1
-			blueHighAmpLight := blueAmpSpeaker.BankedAmpNotes >= 2
+			blueLowAmpLight := blueAmpSpeaker.ProcessedAlgae >= 1
+			blueHighAmpLight := blueAmpSpeaker.ProcessedAlgae >= 2
 			blueCoopAmpLight := blueAmpSpeaker.CoopActivated
 			if blueAmplifiedTimeRemaining > 0 {
 				blueLowAmpLight = int(blueAmplifiedTimeRemaining*4)%2 == 0

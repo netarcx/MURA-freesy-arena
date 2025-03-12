@@ -45,6 +45,8 @@ type Plc interface {
 	SetAlternateIOStopState(input int, state bool)
 	ResetEstops()
 	GetFieldStackLight() (bool, bool, bool, bool)
+	GetBargeStackLight() (bool, bool, bool, bool,bool)
+	
 }
 
 type ModbusPlc struct {
@@ -143,6 +145,7 @@ const (
 	blueAmpLightHigh
 	blueAmpLightCoop
 	postMatchSubwooferLights
+	isPlayoffs
 	coilCount
 )
 
@@ -357,6 +360,7 @@ func (plc *ModbusPlc) SetAmpLights(redLow, redHigh, redCoop, blueLow, blueHigh, 
 	plc.coils[blueAmpLightLow] = blueLow
 	plc.coils[blueAmpLightHigh] = blueHigh
 	plc.coils[blueAmpLightCoop] = blueCoop
+	plc.coils[isPlayoffs] = false
 }
 
 // Sets the state of the post-match subwoofer lights.
@@ -535,4 +539,7 @@ func (plc *ModbusPlc) SetAlternateIOStopState(input int, state bool){
 
 func (plc *ModbusPlc) GetFieldStackLight() (bool, bool, bool, bool) {
 	return plc.coils[stackLightRed], plc.coils[stackLightBlue], plc.coils[stackLightOrange], plc.coils[stackLightGreen]
+}
+func (plc *ModbusPlc) GetBargeStackLight() (bool, bool, bool, bool, bool) {
+	return plc.coils[redAmpLightLow], plc.coils[redAmpLightHigh], plc.coils[blueAmpLightLow], plc.coils[blueAmpLightHigh], plc.coils[isPlayoffs]
 }

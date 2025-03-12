@@ -28,12 +28,13 @@ func _() {
 	_ = x[blueAmpLightHigh-17]
 	_ = x[blueAmpLightCoop-18]
 	_ = x[postMatchSubwooferLights-19]
-	_ = x[coilCount-20]
+	_ = x[isPlayoffs-20]
+	_ = x[coilCount-21]
 }
 
-const _coil_name = "heartbeatmatchResetstackLightGreenstackLightOrangestackLightRedstackLightBluestackLightBuzzerfieldResetLightspeakerMotorsredSpeakerLightblueSpeakerLightredSubwooferCountdownblueSubwooferCountdownredAmpLightLowredAmpLightHighredAmpLightCoopblueAmpLightLowblueAmpLightHighblueAmpLightCooppostMatchSubwooferLightscoilCount"
+const _coil_name = "heartbeatmatchResetstackLightGreenstackLightOrangestackLightRedstackLightBluestackLightBuzzerfieldResetLightspeakerMotorsredSpeakerLightblueSpeakerLightredSubwooferCountdownblueSubwooferCountdownredAmpLightLowredAmpLightHighredAmpLightCoopblueAmpLightLowblueAmpLightHighblueAmpLightCooppostMatchSubwooferLightsisPlayoffscoilCount"
 
-var _coil_index = [...]uint16{0, 9, 19, 34, 50, 63, 77, 93, 108, 121, 136, 152, 173, 195, 209, 224, 239, 254, 270, 286, 310, 319}
+var _coil_index = [...]uint16{0, 9, 19, 34, 50, 63, 77, 93, 108, 121, 136, 152, 173, 195, 209, 224, 239, 254, 270, 286, 310, 320, 329}
 
 func (i coil) String() string {
 	if i < 0 || i >= coil(len(_coil_index)-1) {

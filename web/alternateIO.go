@@ -53,7 +53,35 @@ type fieldStackLight struct {
 	Green bool `json:"greenStackLight"`
 
 }
+type bargeStackLight struct {
+	Red1 bool `json:"red1StackLight"`
+	Red2 bool `json:"red2StackLight"`
+	Blue1 bool `json:"blue1StackLight"`
+	Blue2 bool `json:"blue2StackLight"`
+	IsPlayoffs bool `json:"isPlayoffsStackLight"`
+}
 
+func (web *Web) bargeStackLightGetHandler(w http.ResponseWriter, r *http.Request) {
+	// Ensure the request is a GET request.
+	if r.Method != http.MethodGet {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Get the current state of the field stack light.
+	var bargeLight bargeStackLight
+	bargeLight.Red1, bargeLight.Red2, bargeLight.Blue1, bargeLight.Blue2, bargeLight.IsPlayoffs = web.arena.Plc.GetBargeStackLight()
+	
+	// Marshal the response payload.
+	response, err := json.Marshal(bargeLight)
+	if err != nil {
+		http.Error(w, "Failed to marshal eStop state", http.StatusInternalServerError)
+		return
+	}
+
+	// Send the response.
+	w.Write(response)
+}
 func (web *Web) fieldStackLightGetHandler(w http.ResponseWriter, r *http.Request) {
 	// Ensure the request is a GET request.
 	if r.Method != http.MethodGet {
