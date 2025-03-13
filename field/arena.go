@@ -952,6 +952,10 @@ func (arena *Arena) handlePlcInputOutput() {
 		oldBlueAmplifiedTimeRemainingSec := arena.BlueRealtimeScore.AmplifiedTimeRemainingSec
 		matchStartTime := arena.MatchStartTime
 		currentTime := time.Now()
+		//MatchTiming.AutoDurationSec + MatchTiming.PauseDurationSec + MatchTiming.TeleopDurationSec - MatchTiming.WarningRemainingDurationSec
+		endgamePeriod := game.GetDurationToTeleopEnd() - time.Duration(game.MatchTiming.WarningRemainingDurationSec)*time.Second
+		inEndGamePeriod := arena.MatchState == TeleopPeriod && currentTime.After(matchStartTime.Add(endgamePeriod)) && currentTime.Before(matchStartTime.Add(endgamePeriod+(4*time.Second)))
+		arena.Plc.SetIsEndGame(inEndGamePeriod)
 		teleopGracePeriod := matchStartTime.Add(
 			game.GetDurationToTeleopEnd() + game.SpeakerTeleopGracePeriodSec*time.Second,
 		)
@@ -961,7 +965,7 @@ func (arena *Arena) handlePlcInputOutput() {
 		blueAllianceReady := arena.checkAllianceStationsReady("B1", "B2", "B3") == nil
 		
 		// Handle the evergreen PLC functions: stack lights, stack buzzer, and field reset light.
-		arena.Plc.SetMatchState(uint16(arena.MatchState))
+		arena.Plc.SetMatchState(uint16(arena.MatchState), arena.CurrentMatch.Type == model.Playoff)
 		switch arena.MatchState {
 		case PreMatch:
 			if arena.lastMatchState != PreMatch {
@@ -1137,7 +1141,7 @@ func (arena *Arena) handlePlcInputOutput() {
 		blueAllianceReady := arena.checkAllianceStationsReady("B1", "B2", "B3") == nil
 
 		// Handle the evergreen PLC functions: stack lights, stack buzzer, and field reset light.
-		arena.Plc.SetMatchState(uint16(arena.MatchState))
+		arena.Plc.SetMatchState(uint16(arena.MatchState), arena.CurrentMatch.Type == model.Playoff)
 		switch arena.MatchState {
 		case PreMatch:
 			if arena.lastMatchState != PreMatch {

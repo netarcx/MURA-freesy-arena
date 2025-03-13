@@ -45,8 +45,9 @@ type Plc interface {
 	SetAlternateIOStopState(input int, state bool)
 	ResetEstops()
 	GetFieldStackLight() (bool, bool, bool, bool)
-	GetBargeStackLight() (bool, bool, bool, bool, bool, int)
-	SetMatchState(uint16)
+	GetBargeStackLight() (bool, bool, bool, bool, bool, bool, int)
+	SetMatchState(uint16, bool)
+	SetIsEndGame(bool)
 	
 }
 
@@ -148,6 +149,7 @@ const (
 	blueAmpLightCoop
 	postMatchSubwooferLights
 	isPlayoffs
+	isEndGame
 	coilCount
 )
 
@@ -362,7 +364,6 @@ func (plc *ModbusPlc) SetAmpLights(redLow, redHigh, redCoop, blueLow, blueHigh, 
 	plc.coils[blueAmpLightLow] = blueLow
 	plc.coils[blueAmpLightHigh] = blueHigh
 	plc.coils[blueAmpLightCoop] = blueCoop
-	plc.coils[isPlayoffs] = false
 }
 
 // Sets the state of the post-match subwoofer lights.
@@ -542,11 +543,17 @@ func (plc *ModbusPlc) SetAlternateIOStopState(input int, state bool){
 func (plc *ModbusPlc) GetFieldStackLight() (bool, bool, bool, bool) {
 	return plc.coils[stackLightRed], plc.coils[stackLightBlue], plc.coils[stackLightOrange], plc.coils[stackLightGreen]
 }
-func (plc *ModbusPlc) GetBargeStackLight() (bool, bool, bool, bool, bool, int) {
-	return plc.coils[redAmpLightLow], plc.coils[redAmpLightHigh], plc.coils[blueAmpLightLow], plc.coils[blueAmpLightHigh], plc.coils[isPlayoffs], int(plc.registers[matchState])
+func (plc *ModbusPlc) GetBargeStackLight() (bool, bool, bool, bool, bool, bool, int) {
+	return plc.coils[redAmpLightLow], plc.coils[redAmpLightHigh], plc.coils[blueAmpLightLow], plc.coils[blueAmpLightHigh], plc.coils[isPlayoffs], plc.coils[isEndGame], int(plc.registers[matchState])
 }
 
-// Returns the red amp, red speaker, blue amp, and blue speaker note counts, respectively.
-func (plc *ModbusPlc) SetMatchState(state uint16) () {
+// Set the match state and whether the match is a playoff match
+func (plc *ModbusPlc) SetMatchState(state uint16, isPlayOff bool) () {
 	plc.registers[matchState] = state
+	plc.coils[isPlayoffs] = isPlayOff
+}
+
+// Set the end game state
+func( plc *ModbusPlc) SetIsEndGame(endGameState bool) () {
+	plc.coils[isEndGame] = endGameState
 }
