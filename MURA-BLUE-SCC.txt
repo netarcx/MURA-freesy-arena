@@ -1,0 +1,304 @@
+
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname MURA-BLUE-SCC
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$LFkO$HdSriXr0WOxpoJgSJVTtQ0
+enable password FMS@MURA
+!
+username trent privilege 15 secret 5 $1$i34K$iVRWK25pe6WSv5y0kkS4L/
+!
+!
+no aaa new-model
+system mtu routing 1500
+ip routing
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3879407616
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3879407616
+ revocation-check none
+ rsakeypair TP-self-signed-3879407616
+!
+!
+crypto pki certificate chain TP-self-signed-3879407616
+ certificate self-signed 01 nvram:IOS-Self-Sig#3638.cer
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree portfast default
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+interface FastEthernet0/1
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 100
+ switchport trunk allowed vlan 40,50,60,100
+ switchport mode trunk
+!
+interface FastEthernet0/2
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 100
+ switchport trunk allowed vlan 40,50,60,100
+ switchport mode trunk
+!
+interface FastEthernet0/3
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 100
+ switchport trunk allowed vlan 40,50,60,100
+ switchport mode trunk
+!
+interface FastEthernet0/4
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 100
+ switchport trunk allowed vlan 40,50,60,100
+ switchport mode trunk
+!
+interface FastEthernet0/5
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 100
+ switchport trunk allowed vlan 10,20,30,40,50,60,100
+ switchport mode trunk
+!
+interface FastEthernet0/6
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 100
+ switchport trunk allowed vlan 10,20,30,40,50,60,100
+ switchport mode trunk
+!
+interface FastEthernet0/7
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/8
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/9
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/10
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/11
+ switchport access vlan 40
+ switchport mode access
+!
+interface FastEthernet0/12
+ switchport access vlan 40
+ switchport mode access
+!
+interface FastEthernet0/13
+ switchport access vlan 50
+ switchport mode access
+!
+interface FastEthernet0/14
+ switchport access vlan 50
+ switchport mode access
+!
+interface FastEthernet0/15
+ switchport access vlan 60
+ switchport mode access
+!
+interface FastEthernet0/16
+ switchport access vlan 60
+ switchport mode access
+!
+interface FastEthernet0/17
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/18
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/19
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/20
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/21
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/22
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/23
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/24
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/25
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/26
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/27
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/28
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/29
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/30
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/31
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/32
+ switchport access vlan 100
+ switchport mode access
+!
+interface FastEthernet0/33
+ switchport mode access
+!
+interface FastEthernet0/34
+ shutdown
+!
+interface FastEthernet0/35
+ shutdown
+!
+interface FastEthernet0/36
+ shutdown
+!
+interface FastEthernet0/37
+ shutdown
+!
+interface FastEthernet0/38
+ shutdown
+!
+interface FastEthernet0/39
+ shutdown
+!
+interface FastEthernet0/40
+ shutdown
+!
+interface FastEthernet0/41
+ shutdown
+!
+interface FastEthernet0/42
+ shutdown
+!
+interface FastEthernet0/43
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/44
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/45
+ switchport access vlan 20
+ switchport mode access
+!
+interface FastEthernet0/46
+ switchport access vlan 20
+ switchport mode access
+!
+interface FastEthernet0/47
+ switchport access vlan 30
+ switchport mode access
+!
+interface FastEthernet0/48
+ switchport access vlan 30
+ switchport mode access
+!
+interface GigabitEthernet0/1
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 100
+ switchport trunk allowed vlan 40,50,60,100
+ switchport mode trunk
+!
+interface GigabitEthernet0/2
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 100
+ switchport trunk allowed vlan 40,50,60,100
+ switchport mode trunk
+!
+interface GigabitEthernet0/3
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 100
+ switchport trunk allowed vlan 10,20,30,100
+ switchport mode trunk
+!
+interface GigabitEthernet0/4
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 100
+ switchport trunk allowed vlan 10,20,30,40,50,60,100
+ switchport mode trunk
+!
+interface Vlan1
+ ip address dhcp
+!
+interface Vlan51
+ no ip address
+ shutdown
+!
+interface Vlan100
+ ip address dhcp
+!
+ip classless
+ip http server
+ip http secure-server
+!
+!
+ip sla enable reaction-alerts
+!
+snmp-server community MURAFMS RO
+!
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ history size 30
+line vty 0 4
+ exec-timeout 0 0
+ password FMS@MURA
+ logging synchronous
+ login
+ history size 30
+line vty 5 15
+ exec-timeout 0 0
+ password FMS@MURA
+ logging synchronous
+ login
+ history size 30
+!
+end
+
